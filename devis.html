@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demande de devis | Impact BTP Gabon Plus</title>
+  <meta name="description" content="Demandez un devis pour un projet de voirie, piste rurale, terrassement, drainage ou accès de chantier au Gabon.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="lucide.min.js"></script>
+  <link rel="icon" href="logoibtprvb.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="devis">
+<div id="siteHeader"></div>
+
+<main class="page-main">
+  <section class="page-hero">
+    <div class="container page-hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">Demande de devis</span>
+        <h1 class="page-title">Centraliser les informations utiles avant étude</h1>
+        <p>Cette mini-page remplace les formulaires longs sur l'accueil. Elle aide à cadrer le type d'intervention, la zone, le délai et les pièces disponibles.</p>
+      </div>
+      <div class="page-hero-media reveal-right">
+        <img src="photos/used/materiaux-chantier-ciment.jpg" alt="Matériaux préparés pour un chantier BTP">
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-white">
+    <div class="container form-grid">
+      <div class="text-flow reveal-left">
+        <div class="section-head">
+          <span class="eyebrow">Préparer</span>
+          <h2>Plus le besoin est précis, plus l'étude avance vite</h2>
+          <p>Indiquez la localisation, le type d'accès, l'état actuel du terrain et les contraintes visibles. Les photos, plans ou notes techniques peuvent aider à préparer l'échange.</p>
+        </div>
+        <div class="contact-list">
+          <article class="info-card">
+            <div class="card-icon"><i data-lucide="map"></i></div>
+            <h3>Localisation</h3>
+            <p>Commune, quartier, village ou repère terrain.</p>
+          </article>
+          <article class="info-card">
+            <div class="card-icon"><i data-lucide="calendar-days"></i></div>
+            <h3>Délai souhaité</h3>
+            <p>Urgence, date cible ou fenêtre de travaux.</p>
+          </article>
+        </div>
+      </div>
+
+      <form id="devisForm" class="form-card reveal-right" action="https://formsubmit.co/impact.gabonbtp@gmail.com" method="POST" enctype="multipart/form-data" data-formsubmit-form>
+        <input type="hidden" name="_subject" value="Demande de devis - Impact BTP Gabon Plus">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input class="form-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-grid-inner">
+          <div class="field">
+            <label for="nom">Nom complet</label>
+            <input id="nom" name="nom" type="text" required placeholder="Votre nom">
+          </div>
+          <div class="field">
+            <label for="telephone">Téléphone</label>
+            <input id="telephone" name="telephone" type="tel" required placeholder="+241...">
+          </div>
+          <div class="field full">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="votre@email.com">
+          </div>
+          <div class="field">
+            <label for="type">Type de projet</label>
+            <select id="type" name="type" required>
+              <option value="">Choisir</option>
+              <option>Voirie secondaire</option>
+              <option>Piste rurale</option>
+              <option>Terrassement</option>
+              <option>Assainissement et drainage</option>
+              <option>Accès de chantier</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="zone">Zone du projet</label>
+            <input id="zone" name="zone" type="text" placeholder="Commune, quartier, village...">
+          </div>
+          <div class="field full">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required placeholder="État actuel, besoin, contraintes, délai souhaité..."></textarea>
+          </div>
+          <div class="field full">
+            <label>Pièces utiles</label>
+            <div id="fileDrop" class="file-drop">
+              <i data-lucide="upload-cloud"></i>
+              <strong>Ajouter des photos ou documents</strong>
+              <span>PDF, image ou note technique si disponible</span>
+            </div>
+            <input id="fileInput" name="attachment" type="file" multiple hidden>
+            <div id="fileList" class="file-list"></div>
+          </div>
+          <div class="field full">
+            <button class="btn btn-primary" type="submit"><i data-lucide="send"></i> Envoyer la demande</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<div id="siteFooter"></div>
+<div id="toast" class="toast"><i data-lucide="check-circle"></i><span>Votre demande a été envoyée à Impact BTP.</span></div>
+<script src="script.js"></script>
+</body>
+</html>
