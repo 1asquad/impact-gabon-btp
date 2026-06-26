@@ -148,7 +148,7 @@ function createHeader() {
         <nav class="desktop-nav" aria-label="Navigation principale">
           ${navMarkup}
         </nav>
-        <a class="nav-cta desktop-cta" href="devis.html">Demander un devis</a>
+        <a class="nav-cta desktop-cta" href="devis.html"><i data-lucide="file-text"></i> Demander un devis</a>
         <button id="menuBtn" class="menu-toggle" type="button" aria-label="Ouvrir le menu">
           <i data-lucide="menu" class="w-6 h-6"></i>
         </button>
@@ -163,6 +163,10 @@ function createHeader() {
       </div>
       <div class="mobile-links">
         ${mobileMarkup}
+        <div class="mobile-actions">
+          <a class="mobile-primary-cta" href="devis.html"><i data-lucide="file-text"></i> Demander un devis</a>
+          <a class="mobile-secondary-cta" href="contact.html"><i data-lucide="phone-call"></i> Contact direct</a>
+        </div>
         <div class="mobile-socials">
           <span>Suivez-nous</span>
           <div class="mobile-social-links">
@@ -218,18 +222,38 @@ function createFooter() {
               <li><a href="contact.html">Contact</a></li>
             </ul>
           </div>
-          <div>
+          <div class="footer-contact-block">
             <h3>Contact</h3>
             <ul class="footer-contact-list">
-              <li><i data-lucide="map-pin"></i><span>${contactInfo.address}</span></li>
-              <li>
-                <i data-lucide="phone"></i>
-                <span>${contactInfo.phones.map(phone => `<a href="${phone.href}">${phone.label}</a>`).join('<br>')}</span>
+              <li class="footer-contact-item">
+                <i data-lucide="map-pin"></i>
+                <span>
+                  <small>Adresse</small>
+                  ${contactInfo.address}
+                </span>
               </li>
-              <li><i data-lucide="mail"></i><span><a href="mailto:${contactInfo.email}">${contactInfo.email}</a></span></li>
-              <li>
+              <li class="footer-contact-item">
+                <i data-lucide="phone"></i>
+                <span>
+                  <small>Téléphones</small>
+                  <span class="footer-phone-links">
+                    ${contactInfo.phones.map(phone => `<a href="${phone.href}">${phone.label}</a>`).join('')}
+                  </span>
+                </span>
+              </li>
+              <li class="footer-contact-item">
+                <i data-lucide="mail"></i>
+                <span>
+                  <small>Email</small>
+                  <a href="mailto:${contactInfo.email}">${contactInfo.email}</a>
+                </span>
+              </li>
+              <li class="footer-contact-item">
                 <svg class="footer-contact-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5A8.3 8.3 0 0 0 5 16.3L4 20.5l4.3-1A8.3 8.3 0 1 0 12 3.5Zm0 2.1a6.2 6.2 0 0 1 5.3 9.4 6.2 6.2 0 0 1-7.9 2.2l-.4-.2-2.2.5.5-2.1-.3-.5A6.2 6.2 0 0 1 12 5.6Zm-2.3 3.1c-.2 0-.5.1-.7.4-.2.3-.8 1-.8 2.1 0 1.2.8 2.3.9 2.5.1.1 1.7 2.8 4.2 3.7 2 .7 2.4.4 2.8.4.4 0 1.3-.6 1.5-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.5-.3l-1.5-.8c-.2-.1-.4-.1-.6.1l-.6.8c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.2-.7-.7-1.2-1.5-1.4-1.8-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.7-1.6c-.2-.4-.4-.4-.6-.4h-.4Z"/></svg>
-                <span><a href="${contactInfo.whatsapp.href}" target="_blank" rel="noopener">${contactInfo.whatsapp.label}</a></span>
+                <span>
+                  <small>WhatsApp</small>
+                  <a href="${contactInfo.whatsapp.href}" target="_blank" rel="noopener">${contactInfo.whatsapp.label}</a>
+                </span>
               </li>
             </ul>
             <div class="footer-social">
