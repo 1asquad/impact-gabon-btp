@@ -1,4 +1,5 @@
 const pageName = document.body.dataset.page || '';
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const contactInfo = {
   address: 'Akanda Libreville Gabon',
@@ -14,6 +15,23 @@ const contactInfo = {
   },
   tiktok: 'https://www.tiktok.com/@impact.btp.gabon?_r=1&_t=ZN-97V0LAjyrQ6'
 };
+
+function initCookieConsent() {
+  const banner = document.getElementById('cookieBanner');
+  const acceptBtn = document.getElementById('cookieAccept');
+  if (!banner || !acceptBtn) return;
+  
+  if (!localStorage.getItem('cookie-consent')) {
+    banner.hidden = false;
+    requestAnimationFrame(() => banner.classList.add('show'));
+  }
+  
+  acceptBtn.addEventListener('click', () => {
+    localStorage.setItem('cookie-consent', 'accepted');
+    banner.classList.remove('show');
+    setTimeout(() => banner.hidden = true, 350);
+  });
+}
 
 const navItems = [
   { page: 'accueil', label: 'Accueil', href: 'index.html' },
@@ -102,7 +120,7 @@ function createHeader() {
         <div class="mega-menu ${item.wide ? 'mega-wide' : ''}">
           ${groupMarkup}
           <a class="mega-preview" href="${href}">
-            <img src="${img}" alt="">
+            <img src="${img}" width="1280" height="720" loading="lazy" decoding="async" alt="${badge} - Impact BTP Gabon Plus">
             <span>${badge}</span>
             <strong>${text}</strong>
           </a>
@@ -126,6 +144,7 @@ function createHeader() {
           <i data-lucide="chevron-down"></i>
         </button>
         <div class="mobile-accordion-panel">
+          <div class="mobile-accordion-inner">
           ${item.groups.map(group => `
             <div class="mobile-subgroup">
               <p>${group.title}</p>
@@ -134,6 +153,7 @@ function createHeader() {
                 .map(([label, href]) => `<a href="${href}">${label}</a>`).join('')}
             </div>
           `).join('')}
+          </div>
         </div>
       </div>
     `;
@@ -143,7 +163,7 @@ function createHeader() {
     <header class="site-header">
       <div class="site-header-inner">
         <a class="brand" href="index.html" aria-label="Impact BTP Gabon Plus">
-          <img src="logoibtppaysagervb.png" alt="Impact BTP Gabon Plus">
+          <img src="photos/logos/logoibtppaysagervb.png" width="3308" height="1124" alt="Impact BTP Gabon Plus">
         </a>
         <nav class="desktop-nav" aria-label="Navigation principale">
           ${navMarkup}
@@ -156,16 +176,15 @@ function createHeader() {
     </header>
     <aside id="mobileMenu" class="mobile-menu" aria-label="Navigation mobile">
       <div class="mobile-menu-head">
-        <a href="index.html"><img src="logoibtppaysagervb.png" alt="Impact BTP Gabon Plus"></a>
         <button id="closeMenu" class="mobile-close" type="button" aria-label="Fermer le menu">
-          <i data-lucide="x" class="w-5 h-5"></i>
+          <i data-lucide="x"></i>
         </button>
       </div>
       <div class="mobile-links">
         ${mobileMarkup}
         <div class="mobile-actions">
           <a class="mobile-primary-cta" href="devis.html"><i data-lucide="file-text"></i> Demander un devis</a>
-          <a class="mobile-secondary-cta" href="contact.html"><i data-lucide="phone-call"></i> Contact direct</a>
+          <a class="mobile-secondary-cta" href="contact.html"><i data-lucide="phone-call"></i> Contact</a>
         </div>
         <div class="mobile-socials">
           <span>Suivez-nous</span>
@@ -189,7 +208,9 @@ function createFooter() {
       <div class="container">
         <div class="footer-inner">
           <div class="footer-brand-block">
-            <img class="footer-logo" src="logoibtppaysagervb.png" alt="Impact BTP Gabon Plus">
+            <a class="footer-logo" href="index.html" aria-label="Impact BTP Gabon Plus - Accueil">
+              <img src="photos/logos/logoibtppaysagervb.png" width="3308" height="1124" loading="lazy" decoding="async" alt="Impact BTP Gabon Plus">
+            </a>
             <p>Entreprise gabonaise spécialisée dans la construction et la réhabilitation de voiries secondaires et pistes rurales.</p>
             <strong>Impactons ensemble l'avenir du Gabon.</strong>
             <div class="footer-brand-marks" aria-hidden="true">
@@ -291,12 +312,15 @@ function initNavigation() {
     mobileMenu?.classList.add('open');
     overlay?.classList.add('show');
     document.body.classList.add('menu-locked');
+    const firstLink = mobileMenu?.querySelector('a');
+    setTimeout(() => firstLink?.focus(), 150);
   }
 
   function closeMobile() {
     mobileMenu?.classList.remove('open');
     overlay?.classList.remove('show');
     document.body.classList.remove('menu-locked');
+    menuBtn?.focus();
   }
 
   function closeMobileAccordions(except) {
@@ -423,6 +447,7 @@ function initHeroSlider() {
   }
 
   function start() {
+    if (prefersReducedMotion) return;
     window.clearInterval(timer);
     timer = window.setInterval(() => goTo(current + 1), 6000);
   }
@@ -475,12 +500,29 @@ function initForms() {
   const forms = document.querySelectorAll('form[data-formsubmit-form]');
 
   function showToast(message, isError = false) {
-    const toast = document.getElementById('toast');
-    const text = toast?.querySelector('span');
-    if (text && message) text.textContent = message;
-    toast?.classList.toggle('is-error', isError);
-    toast?.classList.add('show');
-    setTimeout(() => toast?.classList.remove('show'), 4500);
+    let toast = document.getElementById('toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'toast';
+      toast.className = 'toast';
+      toast.innerHTML = '<i data-lucide="check-circle"></i><span></span>';
+      document.body.appendChild(toast);
+    }
+    const icon = toast.querySelector('i');
+    const text = toast.querySelector('span');
+    if (text) text.textContent = message;
+    if (icon) {
+      icon.setAttribute('data-lucide', isError ? 'alert-circle' : 'check-circle');
+    }
+    toast.classList.toggle('is-error', isError);
+
+    // Reset animation
+    toast.classList.remove('show');
+    void toast.offsetWidth;
+    toast.classList.add('show');
+
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 5000);
   }
 
   function addFiles(files) {
@@ -513,21 +555,29 @@ function initForms() {
   }
 
   async function submitWithFormSubmit(form) {
-    const formData = new FormData(form);
-    formData.set('_subject', getFormSubject(form));
-    formData.set('_template', 'table');
-    formData.set('_captcha', 'false');
-    formData.set('_replyto', form.querySelector('[name="email"]')?.value.trim() || '');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
 
-    const response = await fetch(`https://formsubmit.co/ajax/${contactInfo.email}`, {
-      method: 'POST',
-      body: formData,
-      headers: { Accept: 'application/json' }
-    });
+    try {
+      const formData = new FormData(form);
+      formData.set('_subject', getFormSubject(form));
+      formData.set('_template', 'table');
+      formData.set('_captcha', 'false');
+      formData.set('_replyto', form.querySelector('[name="email"]')?.value.trim() || '');
 
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok || result.success === false) {
-      throw new Error(result.message || 'Form submission failed');
+      const response = await fetch(`https://formsubmit.co/ajax/${contactInfo.email}`, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+        signal: controller.signal
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.success === false) {
+        throw new Error(result.message || "Le service de messagerie n'a pas répondu.");
+      }
+    } finally {
+      clearTimeout(timeout);
     }
   }
 
@@ -565,7 +615,7 @@ function initBackToTop() {
   function sync() {
     button.classList.toggle('show', window.scrollY > 520);
   }
-  window.addEventListener('scroll', sync);
+  window.addEventListener('scroll', sync, { passive: true });
   button.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   sync();
 }
@@ -584,6 +634,29 @@ function initSmoothAnchors() {
   });
 }
 
+function initLazyIframes() {
+  if (!('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const iframe = entry.target;
+        if (iframe.dataset.src) {
+          iframe.src = iframe.dataset.src;
+        }
+        observer.unobserve(iframe);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  document.querySelectorAll('iframe[loading="lazy"]').forEach(iframe => {
+    if (iframe.src) {
+      iframe.dataset.src = iframe.src;
+      iframe.removeAttribute('src');
+    }
+    observer.observe(iframe);
+  });
+}
+
 createHeader();
 createFooter();
 initNavigation();
@@ -593,4 +666,6 @@ initBeforeAfter();
 initForms();
 initBackToTop();
 initSmoothAnchors();
+initCookieConsent();
+initLazyIframes();
 if (window.lucide) window.lucide.createIcons();

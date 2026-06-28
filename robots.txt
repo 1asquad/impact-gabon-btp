@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /acmi_content_studio.html
+Disallow: /menu-test.html
+Disallow: /used-classes.tmp
+Disallow: /.agents/
+Disallow: /.codex/
+
+Sitemap: https://impactbtpgabonplus.com/sitemap.xml
