@@ -620,6 +620,213 @@ function initBackToTop() {
   sync();
 }
 
+/* ====================================================================
+   SERVICES TOGGLE — autoplay content story (CodePen-inspired)
+   ==================================================================== */
+function initServicesToggle() {
+  const wrapper = document.querySelector('.services-toggle');
+  if (!wrapper) return;
+
+  const frames = wrapper.querySelectorAll('.sv-graphics-frame');
+  const items = wrapper.querySelectorAll('.sv-item');
+  const bars = wrapper.querySelectorAll('.sv-progress-bar');
+  const bodies = wrapper.querySelectorAll('.sv-item-body');
+  const itemArray = Array.from(items);
+  let slide = 0;
+  let intervalId = null;
+  let paused = false;
+
+  // Get duration from CSS custom property
+  const durationRaw = wrapper.style.getPropertyValue('--slideDuration') || '6s';
+  const timeout = parseInt(durationRaw.replace('s', '')) * 1000;
+
+  // Init: first item active
+  activateSlide(0, false);
+  autoplay();
+
+  // Click handler
+  items.forEach((item, idx) => {
+    item.addEventListener('click', () => {
+      stopAutoplay();
+      if (!item.classList.contains('is-active')) {
+        activateSlide(idx, true);
+      }
+    });
+  });
+
+  function autoplay() {
+    intervalId = setInterval(() => {
+      const next = (slide + 1) % itemArray.length;
+      activateSlide(next, false);
+    }, timeout);
+  }
+
+  function stopAutoplay() {
+    clearInterval(intervalId);
+    paused = true;
+    bars.forEach(b => b.classList.add('paused'));
+    items.forEach(i => i.classList.add('paused'));
+  }
+
+  function activateSlide(idx, manual) {
+    // Deactivate all
+    items.forEach(i => i.classList.remove('is-active'));
+    frames.forEach(f => f.classList.remove('is-active'));
+    bars.forEach(b => { b.style.animation = 'none'; b.offsetHeight; b.style.animation = ''; });
+
+    // Activate target
+    items[idx].classList.add('is-active');
+    frames[idx].classList.add('is-active');
+
+    if (manual) {
+      items[idx].classList.add('paused');
+      bars[idx].classList.add('paused');
+    }
+
+    slide = idx;
+
+    // Re-trigger progress bar animation on active item
+    const activeBar = bars[idx];
+    activeBar.style.animation = 'none';
+    activeBar.offsetHeight;
+    if (!manual) {
+      activeBar.style.animation = `svProgressFill ${timeout / 1000}s linear forwards`;
+    }
+  }
+}
+
+/* ====================================================================
+   GALLERY REVEAL — CodePen-identical (GSAP-equivalent)
+   toggleActions: play none none reverse → bidirectional IntersectionObserver
+   Clip: 1.2s power4.inOut | Overlay img: 1s power3.out | Scale: 1.4s power2.out
+   ==================================================================== */
+function initGalleryReveal() {
+  const reveals = document.querySelectorAll('.gal-reveal');
+  if (!reveals.length) return;
+
+  // Fallback: show all immediately
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(r => { r.classList.add('is-ready'); r.classList.add('is-visible'); });
+    return;
+  }
+
+  // Bidirectional: add on enter, remove on leave → CSS transitions REVERSE
+  // Matches GSAP toggleActions: "play none none reverse"
+  // rootMargin -25% = GSAP start: "top 75%"
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      } else {
+        entry.target.classList.remove('is-visible');
+      }
+    });
+  }, { rootMargin: '0px 0px -25% 0px', threshold: 0 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Make visible after observer is armed (no FOUC)
+  requestAnimationFrame(() => {
+    reveals.forEach(el => el.classList.add('is-ready'));
+  });
+}
+
+/* ====================================================================
+   AVIS CAROUSEL — 3D sweep, center sharp, sides blurred, infinite
+   ==================================================================== */
+function initAvisCards() {
+  const track = document.getElementById('avCarousel');
+  if (!track) return;
+
+  const slides = Array.from(track.querySelectorAll('.av-slide'));
+  const N = slides.length;
+  if (!N) return;
+
+  let current = 0;
+  let intervalId;
+  let paused = false;
+
+  function stateForOffset(offset) {
+    // offset = 0 → center, 1 → right, -1 → left, ±2 → far
+    const abs = Math.abs(offset);
+    const sign = Math.sign(offset);
+    if (abs === 0) return 'is-center';
+    if (abs === 1) return sign === -1 ? 'is-left' : 'is-right';
+    if (abs === 2) return sign === -1 ? 'is-far-left' : 'is-far-right';
+    return 'is-hidden';
+  }
+
+  function render() {
+    slides.forEach((slide, i) => {
+      // Calculate shortest circular offset from current
+      let raw = i - current;
+      // Wrap to [-floor(N/2), floor(N/2)]
+      const half = Math.floor(N / 2);
+      if (raw > half) raw -= N;
+      if (raw < -half) raw += N;
+
+      // Remove all state classes
+      slide.classList.remove('is-center','is-left','is-right','is-far-left','is-far-right','is-hidden');
+
+      const state = stateForOffset(raw);
+      if (state !== 'is-hidden') slide.classList.add(state);
+      else slide.style.display = 'none';
+
+      if (state === 'is-hidden') {
+        slide.style.opacity = '0';
+        slide.style.pointerEvents = 'none';
+      } else {
+        slide.style.opacity = '';
+        slide.style.pointerEvents = '';
+        slide.style.display = '';
+      }
+    });
+  }
+
+  function next() {
+    current = (current - 1 + N) % N;
+    render();
+  }
+
+  function prev() {
+    current = (current + 1) % N;
+    render();
+  }
+
+  function start() {
+    stop();
+    intervalId = setInterval(next, 3500);
+  }
+
+  function stop() {
+    clearInterval(intervalId);
+  }
+
+  // Click on non-center slides to jump
+  slides.forEach((slide, i) => {
+    slide.addEventListener('click', () => {
+      if (slide.classList.contains('is-center')) return;
+      // Find shortest path to this slide
+      let raw = i - current;
+      const half = Math.floor(N / 2);
+      if (raw > half) raw -= N;
+      if (raw < -half) raw += N;
+      // Jump one step at a time toward target (quick cycle for far slides)
+      current = i;
+      render();
+      stop();
+      start();
+    });
+  });
+
+  // Pause on hover
+  track.addEventListener('mouseenter', stop);
+  track.addEventListener('mouseleave', start);
+
+  render();
+  start();
+}
+
 function initSmoothAnchors() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', event => {
@@ -668,4 +875,7 @@ initBackToTop();
 initSmoothAnchors();
 initCookieConsent();
 initLazyIframes();
+initServicesToggle();
+initGalleryReveal();
+initAvisCards();
 if (window.lucide) window.lucide.createIcons();

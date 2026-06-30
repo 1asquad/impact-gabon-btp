@@ -1768,6 +1768,166 @@ h2,
 
 
 /* ==========================================================================
+   18b. SERVICES TOGGLE (CodePen-inspired split layout)
+   ========================================================================== */
+
+.services-toggle {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+/* ── Left: Graphics ── */
+.sv-graphics-col {
+  position: sticky;
+  top: 100px;
+}
+.sv-graphics-area {
+  display: grid;
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.sv-graphics-frame {
+  grid-column: 1;
+  grid-row: 1;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.sv-graphics-frame.is-active {
+  opacity: 1;
+}
+.sv-graphics-frame img {
+  width: 100%;
+  height: clamp(26rem, 42vw, 34rem);
+  object-fit: cover;
+}
+
+/* ── Right: Content ── */
+.sv-content-col {
+  display: grid;
+  gap: 0;
+}
+
+.sv-intro {
+  padding-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.sv-intro .eyebrow {
+  margin-bottom: 0.6rem;
+}
+.sv-intro h2 {
+  margin-bottom: 0.8rem;
+  color: var(--ink);
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  line-height: 1.08;
+}
+.sv-intro p {
+  max-width: 32rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── Service items ── */
+.sv-items {
+  display: grid;
+}
+
+.sv-item {
+  cursor: pointer;
+}
+
+.sv-item-inner {
+  position: relative;
+  padding: 1.2rem 0 1.2rem 1.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  transition: border-color 0.25s ease;
+}
+
+/* Progress bar track (left vertical line) */
+.sv-progress-track {
+  position: absolute;
+  top: 1.2rem;
+  bottom: 1.2rem;
+  left: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--line);
+  overflow: hidden;
+}
+.sv-progress-bar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: var(--blue);
+  border-radius: 3px;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+/* Active state: progress bar animates */
+.sv-item.is-active .sv-progress-bar {
+  animation: svProgressFill linear forwards;
+  animation-duration: var(--slideDuration, 6s);
+}
+.sv-item.is-active.paused .sv-progress-bar {
+  animation: none;
+}
+
+@keyframes svProgressFill {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+/* Number badge */
+.sv-num {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+/* Headline */
+.sv-item-head {
+  display: grid;
+}
+.sv-item-head h3 {
+  color: var(--ink);
+  font-size: clamp(1.08rem, 1.5vw, 1.25rem);
+  font-weight: 800;
+  line-height: 1.18;
+  opacity: 0.55;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+.sv-item:hover .sv-item-head h3,
+.sv-item.is-active .sv-item-head h3 {
+  opacity: 1;
+  color: var(--blue);
+}
+
+/* Description body */
+.sv-item-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.3s var(--ease);
+}
+.sv-item-body p {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+.sv-item.is-active .sv-item-body {
+  grid-template-rows: 1fr;
+}
+
+
+/* ==========================================================================
    19. PROJECTS
    ========================================================================== */
 
@@ -1819,6 +1979,107 @@ h2,
   margin-top: 0.6rem;
   color: var(--muted);
   line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   19b. GALLERY REVEAL — CodePen-identical (GSAP-equivalent)
+   Container: 1.2s power4.inOut | Overlay img clip: 1s power3.out | Scale: 1.4s power2.out
+   toggleActions: play none none reverse → IntersectionObserver bidirectional
+   ========================================================================== */
+
+.gal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.gal-item {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+}
+
+/* ── Reveal container ── */
+.gal-reveal {
+  position: relative;
+  overflow: hidden;
+  visibility: hidden;
+  border-radius: 12px;
+  width: 100%;
+  height: clamp(20rem, 28vw, 28rem);
+}
+
+/* Direction → initial clip-path (set by CSS, matches CodePen) */
+.gal-reveal--top    { clip-path: inset(0 0 100% 0); }
+.gal-reveal--right  { clip-path: inset(0 100% 0 0); }
+.gal-reveal--bottom { clip-path: inset(100% 0 0 0); }
+.gal-reveal--left   { clip-path: inset(0 0 0 100%); }
+
+/* Overlay variant: solid blue bg shows through during reveal */
+.gal-reveal--overlay {
+  background: var(--blue);
+}
+/* Overlay image must also be clipped in the same direction initially */
+.gal-reveal--top.gal-reveal--overlay img    { clip-path: inset(0 0 100% 0); }
+.gal-reveal--right.gal-reveal--overlay img  { clip-path: inset(0 100% 0 0); }
+.gal-reveal--bottom.gal-reveal--overlay img { clip-path: inset(100% 0 0 0); }
+.gal-reveal--left.gal-reveal--overlay img   { clip-path: inset(0 0 0 100%); }
+
+/* Ready: visible, CSS transitions armed */
+.gal-reveal.is-ready {
+  visibility: visible;
+  transition: clip-path 1.2s cubic-bezier(0.41, 0, 0.58, 1); /* power4.inOut */
+}
+
+.gal-reveal img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.25);
+  transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1); /* power2.out */
+}
+
+/* Overlay image: animate clip-path too */
+.gal-reveal--overlay img {
+  transition:
+    clip-path 1s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* ── Visible: reveal fully open ── */
+.gal-reveal.is-visible {
+  clip-path: inset(0 0 0 0) !important;
+}
+.gal-reveal.is-visible img {
+  transform: scale(1);
+}
+.gal-reveal--overlay.is-visible img {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ── Caption ── */
+.gal-caption span {
+  display: inline-block;
+  margin-bottom: 0.3rem;
+  color: var(--blue);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.gal-caption h3 {
+  color: var(--ink);
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.gal-caption p {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
 }
 
 
@@ -2378,9 +2639,9 @@ h2,
   align-items: center;
   gap: 0.8rem;
   padding: 2rem 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(16,112,48,0.12);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--green);
   box-shadow: var(--shadow-card);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -2388,14 +2649,55 @@ h2,
   transform: translateY(-3px);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
 }
+
+/* Yellow card variant (Méthode section) */
+.cards-yellow .pro-card {
+  background: var(--yellow);
+  border-color: rgba(0,0,0,0.08);
+}
+.cards-yellow .pro-card .card-icon {
+  background: rgba(0,80,144,0.12);
+  color: var(--blue);
+}
+.cards-yellow .pro-card h3 {
+  color: var(--blue-dark);
+}
+.cards-yellow .pro-card p {
+  color: rgba(0,63,115,0.75);
+}
+.cards-yellow .pro-card:hover {
+  border-color: var(--blue-soft);
+  box-shadow: 0 8px 32px rgba(0,80,144,0.1);
+}
+
+/* Blue card variant (Suivi chantier) */
+.cards-blue .pro-card {
+  background: var(--blue);
+  border-color: rgba(255,255,255,0.1);
+}
+.cards-blue .pro-card .card-icon {
+  background: rgba(242,189,24,0.15);
+  color: var(--yellow);
+}
+.cards-blue .pro-card h3 {
+  color: #fff;
+}
+.cards-blue .pro-card p {
+  color: rgba(255,255,255,0.8);
+}
+.cards-blue .pro-card:hover {
+  border-color: var(--yellow);
+  box-shadow: 0 8px 32px rgba(0,80,144,0.3);
+}
+
 .partner-item svg {
   width: 2rem;
   height: 2rem;
-  color: var(--blue);
-  opacity: 0.65;
+  color: #fff;
+  opacity: 0.9;
 }
 .partner-item span {
-  color: var(--ink);
+  color: #fff;
   font-size: 0.95rem;
   font-weight: 750;
 }
@@ -2415,10 +2717,216 @@ h2,
 
 
 /* ==========================================================================
-   30. CONTACT PAGE — Modern Design (light)
+   29c. AVIS CAROUSEL — 3D sweep, center sharp, sides blurred
    ========================================================================== */
 
-/* ── Hero full-screen avec image de fond (dark overlay) ── */
+.av-carousel-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 1200px;
+  padding: clamp(3rem, 8vw, 6rem) 0;
+}
+.av-carousel-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: clamp(26rem, 36vw, 30rem);
+  transform-style: preserve-3d;
+}
+
+/* ── Slide ── */
+.av-slide {
+  position: absolute;
+  width: min(28rem, 80vw);
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    z-index 0s;
+  transform-style: preserve-3d;
+}
+
+.av-slide-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 1rem;
+  padding: 1.8rem;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+/* Static grid: 3 cols, no carousel transforms */
+.av-static-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+.av-static-grid .av-slide-inner {
+  height: 100%;
+}
+@media (max-width: 900px) {
+  .av-static-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* ── Default (invisible sides) ── */
+.av-slide {
+  opacity: 0;
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Center: sharp, full, active ── */
+.av-slide.is-center {
+  transform: translateX(0) scale(1) translateZ(0);
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+  z-index: 3;
+}
+
+/* ── Left (previous): pushed left + scaled down + blurred ── */
+.av-slide.is-left {
+  transform: translateX(calc(-50% - 1.5rem)) scale(0.82) translateZ(-100px);
+  opacity: 0.45;
+  filter: blur(3px);
+  z-index: 1;
+}
+
+/* ── Right (next): pushed right + scaled down + blurred ── */
+.av-slide.is-right {
+  transform: translateX(calc(50% + 1.5rem)) scale(0.82) translateZ(-100px);
+  opacity: 0.45;
+  filter: blur(3px);
+  z-index: 1;
+}
+
+/* ── Far sides: hidden with strong blur ── */
+.av-slide.is-far-left {
+  transform: translateX(calc(-80% - 3rem)) scale(0.65) translateZ(-200px);
+  opacity: 0.12;
+  filter: blur(8px);
+  z-index: 0;
+}
+.av-slide.is-far-right {
+  transform: translateX(calc(80% + 3rem)) scale(0.65) translateZ(-200px);
+  opacity: 0.12;
+  filter: blur(8px);
+  z-index: 0;
+}
+
+/* ── Elements shared with old layout ── */
+.av-card-badge {
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 0.25rem;
+  border: 1px solid var(--accent, var(--blue));
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  background: color-mix(in srgb, var(--accent, var(--blue)) 8%, transparent);
+  color: var(--accent, var(--blue));
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.av-stars {
+  display: flex;
+  gap: 0.15rem;
+  color: var(--yellow);
+}
+.av-stars svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+.av-slide blockquote {
+  flex: 1;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-style: normal;
+}
+.av-slide blockquote::before {
+  content: '"';
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--accent, var(--blue));
+  font-size: 2.2rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.35;
+}
+.av-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding-top: 1rem;
+}
+.av-avatar {
+  display: flex;
+  width: 2.6rem;
+  height: 2.6rem;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--av-bg, var(--tint-blue));
+  color: var(--av-fg, var(--blue));
+}
+.av-avatar svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.av-author strong {
+  display: block;
+  color: var(--ink);
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+.av-author span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+/* ── Mobile: tighter layout ── */
+@media (max-width: 700px) {
+  .av-carousel-track {
+    height: clamp(22rem, 48vw, 28rem);
+  }
+  .av-slide {
+    width: 85vw;
+  }
+  .av-slide-inner {
+    padding: 1.3rem;
+  }
+  .av-slide.is-left {
+    transform: translateX(calc(-55% - 1rem)) scale(0.75) translateZ(-100px);
+  }
+  .av-slide.is-right {
+    transform: translateX(calc(55% + 1rem)) scale(0.75) translateZ(-100px);
+  }
+}
+
+
+/* ==========================================================================
+   30. CONTACT PAGE — Modern Design (light)
+   ========================================================================== */
 .contact-hero-modern {
   position: relative;
   display: flex;
@@ -2713,18 +3221,18 @@ a.contact-quick-card:hover {
   gap: 0.85rem;
   padding: 0.85rem 1rem;
   border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  background: var(--green);
+  border: 1px solid rgba(255,255,255,0.1);
   box-shadow: var(--shadow-tight);
 }
 .trust-item svg {
   width: 1.45rem;
   height: 1.45rem;
   flex-shrink: 0;
-  color: var(--green);
+  color: #fff;
 }
 .trust-item span {
-  color: var(--ink);
+  color: #fff;
   font-size: 0.92rem;
   font-weight: 750;
 }
@@ -2839,6 +3347,12 @@ a.contact-quick-card:hover {
   .partner-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .gal-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gal-reveal {
+    height: 18rem;
+  }
 }
 
 /* ----- max-width: 1023px ----- */
@@ -2916,6 +3430,20 @@ a.contact-quick-card:hover {
   .service-detail-img {
     grid-column: 1 / -1;
     height: 16rem;
+  }
+
+  /* Services toggle stack */
+  .services-toggle {
+    grid-template-columns: 1fr;
+  }
+  .sv-graphics-col {
+    position: static;
+  }
+  .sv-graphics-frame img {
+    height: 20rem;
+  }
+  .sv-item-inner {
+    padding: 1rem 0 1rem 1.2rem;
   }
   .quote-media,
   .quote-media img {
@@ -3124,6 +3652,21 @@ a.contact-quick-card:hover {
     width: 100%;
     height: 0.3rem;
   }
+
+  /* Services toggle stack */
+  .services-toggle {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .sv-graphics-col {
+    position: static;
+  }
+  .sv-graphics-frame img {
+    height: 17rem;
+  }
+  .sv-item-inner {
+    padding: 1rem 0 1rem 1.2rem;
+  }
   .image-card img,
   .before-after,
   .before-after > img,
@@ -3148,6 +3691,10 @@ a.contact-quick-card:hover {
   }
   .partner-grid {
     grid-template-columns: 1fr;
+  }
+  .gal-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   /* Cards */
