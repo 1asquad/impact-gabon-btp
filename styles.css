@@ -708,12 +708,15 @@ svg {
   transform: translateY(-1px);
 }
 .mobile-secondary-cta {
-  background: rgba(0, 80, 144, 0.06);
-  color: var(--blue) !important;
+  background: var(--green);
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(16, 112, 48, 0.18);
 }
 .mobile-secondary-cta:hover {
-  background: rgba(0, 80, 144, 0.1) !important;
-  color: var(--blue) !important;
+  background: var(--green-dark) !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(11, 87, 38, 0.24);
 }
 
 .mobile-socials {
@@ -736,25 +739,25 @@ svg {
 }
 .mobile-social-link {
   display: inline-flex;
-  width: 2.35rem;
-  height: 2.35rem;
+  width: 2.75rem;
+  height: 2.75rem;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 0.55rem;
-  background: transparent;
-  color: var(--muted);
+  border: 1.5px solid rgba(0, 0, 0, 0.14);
+  border-radius: 0.6rem;
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--ink);
   transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 .mobile-social-link svg {
-  width: 1rem;
-  height: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
   fill: currentColor;
 }
 .mobile-social-link:hover {
-  border-color: var(--blue);
-  background: rgba(0, 80, 144, 0.04);
-  color: var(--blue);
+  border-color: var(--green);
+  background: rgba(16, 112, 48, 0.06);
+  color: var(--green);
   transform: translateY(-1px);
 }
 
@@ -1039,20 +1042,20 @@ svg {
   gap: 0.3rem;
 }
 .hero-dot {
-  width: 0.8rem;
-  height: 1px;
+  width: 3px;
+  height: 3px;
   border: 0;
-  border-radius: 999px;
+  border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 .hero-dot:hover {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.38);
+  transform: scale(1.2);
 }
 .hero-dot.on {
-  width: 1.8rem;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 

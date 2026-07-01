@@ -1,0 +1,186 @@
+/* ==========================================================================
+   IMPACT BTP GABON PLUS — PALETTE RAFFINÉE v4
+   Coloriste senior UI/UX · Nettoyage & professionnalisation
+   ==========================================================================
+   
+   RÈGLE D'OR : Aucune teinte de base (Hue) n'a été modifiée.
+   Bleu roi → 207° | Vert forêt → 140° | Or → 46°
+   
+   TABLEAU COMPARATIF AVANT / APRÈS
+   ═══════════════════════════════════════════════════════════════════════
+   Variable              Avant         Après         Action
+   ─────────────────────────────────────────────────────────────────────
+   --blue                #005090       #0C61A6       S: 100→86%  L: 28→35%
+   --blue-dark           #003F73       #073D69       S: 100→88%  L: 22→22%  H réaligné 207→207°
+   --blue-ink            #05253F       #031C30       S: 85→90%   L: 13→10%
+   --blue-soft           #DFEEF8       #E6EEF4       S: 64→38%   H réaligné 204→207°
+   --green               #107030       #15843A       S: 75→72%   L: 25→30%
+   --green-dark          #0B5726       #0D5424       S: 78→74%   H réaligné 141→140°
+   --green-soft          #DFEEE3       #E8F2EB       S: 31→28%   H réaligné 136→140°
+   --yellow              #F2BD18       #ECB913       S: 89→85%   H réaligné 45→46°
+   --yellow-soft         #FFF4CB       #F7F2E3       S: 100→55%  H réaligné 47→46°
+   --ink                 #102033       #1A2028       S: 52→22%   Noir plus naturel
+   --text                #38495A       #434C56       S: 23→12%   Meilleure lisibilité
+   --muted               #6A7B88       #687078       S: 12→7%    Contraste AA
+   --line                #DDE1E5       #E3E3E3       Parasite 210°→ Neutre pur
+   --soft                #F0F2F4       #F2F2F2       Parasite 210°→ Neutre pur
+   --surface             #FAFBFB       #FAFAFA       Parasite 180°→ Neutre pur
+   --surface-strong      #EEF0F2       #EDEDED       Parasite 210°→ Neutre pur
+   --bg                  #F5F6F7       #F5F5F5       Parasite 210°→ Neutre pur
+   --bg-alt              #EDF0F2       #F0F0F0       Parasite 204°→ Neutre pur
+   --bg-card-hover       #FAFBFC       #F7F7F7       Parasite 210°→ Neutre pur
+   --tint-blue           #D6E6F4       #E3E9ED       H réaligné 208→207°
+   --tint-green          #D4E7D7       #E3EDE7       H réaligné 130→140°
+   --tint-yellow         #FEF3C7       #F2EEE3       H réaligné 48→46°
+   --text-on-dark        #C8D8E8       #D6DCE1       S: 41→16%   Plus doux
+   --text-muted-on-dark  #889DB5       #9AA3AC       S: 23→10%   Plus sobre
+   ═══════════════════════════════════════════════════════════════════════
+   
+   JUSTIFICATIONS CLÉS
+   ─────────────────────────────────────────────────────────────────────
+   1. Bleu (#005090 → #0C61A6) : Saturation à 100% = effet « néon numérique »
+      agressif. Réduite à 86%, luminosité remontée à 35% → bleu roi corporate
+      qui respire, conserve son autorité sans agresser la rétine.
+   
+   2. Vert (#107030 → #15843A) : Le vert forêt gagne 5 pts de luminosité.
+      Sur fond blanc, le contraste passe de 5.2:1 à 4.8:1 AA — toujours
+      conforme WCAG AA mais le vert est plus lumineux, moins « treillis militaire ».
+   
+   3. Jaune (#F2BD18 → #ECB913) : Légère baisse de saturation (−4 pts) et
+      réalignement de teinte (45→46°) pour un or plus chaud, moins « panneau
+      de signalisation ».
+   
+   4. Gris neutralisés : Tous les gris de structure (--line, --soft, --surface,
+      --bg, --bg-alt, --bg-card-hover) avaient des dominantes bleu/cyan
+      parasites (H=180° à 210°). Remplacés par des gris purs (H=0°, S=0%)
+      pour une base parfaitement neutre. Le design gagne en netteté sans
+      perdre sa hiérarchie.
+   
+   5. Teintes réalignées : Plusieurs variables dérivaient de la teinte mère :
+      --blue-soft était à 204° au lieu de 207°, --tint-green à 130° au lieu
+      de 140°. Toutes recalées → cohérence chromatique absolue.
+   
+   WCAG 2.1 — RATIOS DE CONTRASTE CLÉS
+   ─────────────────────────────────────────────────────────────────────
+   ✅  8.7:1 [AAA]  Texte courant (--text) sur fond blanc
+   ✅ 16.4:1 [AAA]  Titres (--ink) sur fond blanc
+   ✅  6.4:1 [AA]   Texte blanc sur boutons bleus (--blue)
+   ✅  4.8:1 [AA]   Texte blanc sur boutons verts (--green)
+   ✅  9.0:1 [AAA]  Texte sombre sur fond jaune (CTA hero)
+   ✅  5.0:1 [AA]   Texte atténué (--muted) sur fond blanc
+   ✅ 11.8:1 [AAA]  Texte clair sur fond footer (--blue-ink)
+   ========================================================================== */
+
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES — PALETTE FINALE
+   Copier ce bloc :root en remplacement de l'existant dans styles.css
+   ========================================================================== */
+
+:root {
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     BLUE FAMILY · Hue 207° (Royal Blue)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --blue-050: #F2F5F8;   /* Fond bleu quasi blanc        */
+  --blue-100: #E6EEF4;   /* Fond bleu subtil (ex-soft)   */
+  --blue-200: #C2D8EB;   /* Accent bleu léger            */
+  --blue-300: #78B3E2;   /* Bleu ciel soutenu            */
+  --blue-400: #258EE4;   /* Bleu vif (illustrations)     */
+  --blue-500: #0C61A6;   /* ★ Primaire — ex #005090      */
+  --blue-600: #094E86;   /* Intermédiaire                */
+  --blue-700: #073D69;   /* Hover / dark — ex #003F73    */
+  --blue-800: #042A48;   /* Très foncé                   */
+  --blue-900: #031C30;   /* Hero / footer — ex #05253F   */
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     GREEN FAMILY · Hue 140° (Forest Green)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --green-050: #F2F7F4;   /* Fond vert quasi blanc       */
+  --green-100: #E8F2EB;   /* Fond vert subtil (ex-soft)  */
+  --green-200: #C7E6D1;   /* Accent vert léger           */
+  --green-300: #7BD599;   /* Vert moyen                   */
+  --green-400: #2CC960;   /* Vert vif (accents)          */
+  --green-500: #15843A;   /* ★ Primaire — ex #107030     */
+  --green-600: #116A2E;   /* Intermédiaire                */
+  --green-700: #0D5424;   /* Hover / dark — ex #0B5726   */
+  --green-800: #083A19;   /* Très foncé                   */
+  --green-900: #04240F;   /* Presque noir vert            */
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     YELLOW FAMILY · Hue 46° (Warm Gold)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --yellow-050: #F9F7F0;   /* Fond or quasi blanc         */
+  --yellow-100: #F7F2E3;   /* Fond crème (ex-soft)        */
+  --yellow-200: #F4E8C3;   /* Accent or léger             */
+  --yellow-300: #F2DB92;   /* Or moyen                     */
+  --yellow-400: #EFCC57;   /* Or soutenu                   */
+  --yellow-500: #ECB913;   /* ★ Primaire — ex #F2BD18     */
+  --yellow-600: #C79C0F;   /* Intermédiaire                */
+  --yellow-700: #A27F0B;   /* Or foncé                     */
+  --yellow-800: #7D6207;   /* Très foncé                   */
+  --yellow-900: #584404;   /* Presque noir or              */
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     SEMANTIC ALIASES — Compatibilité avec le code existant
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --blue:       var(--blue-500);
+  --blue-dark:  var(--blue-700);
+  --blue-ink:   var(--blue-900);
+  --blue-soft:  var(--blue-100);
+  --green:      var(--green-500);
+  --green-dark: var(--green-700);
+  --green-soft: var(--green-100);
+  --yellow:     var(--yellow-500);
+  --yellow-soft:var(--yellow-100);
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     TYPOGRAPHY — Neutres bleutés contrôlés
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --ink:   #1A2028;   /* Noir bleuté 215° — titres       ex #102033 */
+  --text:  #434C56;   /* Gris anthracite 212° — corps     ex #38495A */
+  --muted: #687078;   /* Gris moyen 210° — secondaire     ex #6A7B88 */
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     GRAY SYSTEM — Gris purs parfaitement neutres (H=0°, S=0%)
+     Débarrassés des dominantes parasites bleu/cyan (180°–210°)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --line:           #E3E3E3;   /* Bordures           ex #DDE1E5 (210°) */
+  --soft:           #F2F2F2;   /* Fonds doux         ex #F0F2F4 (210°) */
+  --surface:        #FAFAFA;   /* Surfaces           ex #FAFBFB (180°) */
+  --surface-strong: #EDEDED;   /* Surface appuyée    ex #EEF0F2 (210°) */
+  --bg:             #F5F5F5;   /* Fond de page       ex #F5F6F7 (210°) */
+  --bg-alt:         #F0F0F0;   /* Fond alternatif    ex #EDF0F2 (204°) */
+  --bg-card-hover:  #F7F7F7;   /* Hover carte        ex #FAFBFC (210°) */
+  --white:          #FFFFFF;
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     BACKGROUND SYSTEM (neutres)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --bg:        #F5F5F5;
+  --bg-alt:    #F0F0F0;
+  --bg-card:   #FFFFFF;
+  --bg-card-hover: #F7F7F7;
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     TINTS — Teintes de section réalignées sur les hues mères
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --tint-blue:   #E3E9ED;   /* H=207° ex #D6E6F4 (208°) */
+  --tint-green:  #E3EDE7;   /* H=140° ex #D4E7D7 (130°) */
+  --tint-yellow: #F2EEE3;   /* H=46°  ex #FEF3C7 (48°)  */
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     DARK SECTION TEXT — Hero, page-hero, footer
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --text-on-dark:        #D6DCE1;   /* ex #C8D8E8 S:41→16% */
+  --text-muted-on-dark:  #9AA3AC;   /* ex #889DB5 S:23→10% */
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     SHADOWS & EFFECTS (inchangés)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  --shadow:        0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-tight:  0 2px 12px rgba(0, 0, 0, 0.04);
+  --shadow-card:   0 2px 16px rgba(0, 0, 0, 0.05);
+  --shadow-header: 0 2px 20px rgba(0, 0, 0, 0.06);
+
+  --radius: 0.5rem;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}

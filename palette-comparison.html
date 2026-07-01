@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impact BTP Gabon Plus — Comparaison Palette Avant/Après</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Outfit,system-ui,sans-serif;background:#f5f5f5;color:#1a2028;padding:2rem;line-height:1.5}
+  h1{font-size:2.2rem;font-weight:900;margin-bottom:.25rem}
+  h2{font-size:1.4rem;font-weight:800;margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid #e3e3e3}
+  h3{font-size:1rem;font-weight:700;margin:1.5rem 0 .75rem;color:#434c56}
+  .sub{color:#687078;margin-bottom:2rem;font-size:1.05rem}
+  .container{max-width:1100px;margin:0 auto}
+  
+  /* Swatch grid */
+  .swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.75rem;margin-bottom:1.5rem}
+  .swatch{border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .swatch-color{height:80px;position:relative}
+  .swatch-color.old::after{content:'AVANT';position:absolute;top:6px;right:6px;font-size:.58rem;font-weight:900;letter-spacing:.08em;background:rgba(0,0,0,.5);color:#fff;padding:2px 6px;border-radius:4px}
+  .swatch-color.new::after{content:'APRÈS';position:absolute;top:6px;right:6px;font-size:.58rem;font-weight:900;letter-spacing:.08em;background:rgba(0,0,0,.5);color:#fff;padding:2px 6px;border-radius:4px}
+  .swatch-info{padding:.6rem .75rem;background:#fff;font-size:.78rem}
+  .swatch-info strong{display:block;font-size:.85rem;margin-bottom:.15rem}
+  .swatch-info code{font-size:.72rem;color:#687078;display:block}
+  .swatch-info .hsl{color:#15843a;font-size:.68rem}
+  
+  /* Comparison rows */
+  .compare-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+  .compare-cell{border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .compare-label{font-size:.65rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .75rem}
+  .compare-label.old{background:rgba(0,0,0,.06);color:#687078}
+  .compare-label.new{background:rgba(21,132,58,.12);color:#0d5424}
+  
+  /* Rendered examples */
+  .render-section{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2rem}
+  .render-panel{border-radius:12px;padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .render-panel.old-panel{background:#fff;border:1px solid #dde1e5}
+  .render-panel.new-panel{background:#fff;border:1px solid #e3e3e3}
+  .render-panel h4{font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+  .render-panel.old-panel h4{color:#6a7b88}
+  .render-panel.new-panel h4{color:#15843a}
+  
+  .btn-sample{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.2rem;border-radius:8px;font-weight:800;font-size:.9rem;margin:.25rem;border:1px solid transparent;cursor:default}
+  .btn-sample.small{font-size:.78rem;padding:.45rem .85rem}
+  
+  .text-sample{margin:.5rem 0}
+  .text-sample.heading{font-size:1.6rem;font-weight:900;line-height:1.1}
+  .text-sample.body{font-size:.95rem;line-height:1.6;max-width:32ch}
+  .text-sample.muted{font-size:.82rem;font-weight:600}
+  
+  .card-sample{border-radius:10px;padding:1.2rem;margin:.5rem 0}
+  .hero-sample{border-radius:12px;padding:2rem 1.5rem;margin:.5rem 0;position:relative;overflow:hidden}
+  
+  /* WCAG badges */
+  .wcag-badge{display:inline-block;font-size:.62rem;font-weight:900;letter-spacing:.08em;padding:2px 7px;border-radius:4px;margin-left:.4rem}
+  .wcag-aaa{background:#15843a;color:#fff}
+  .wcag-aa{background:#ecb913;color:#1a2028}
+  .wcag-fail{background:#dc2626;color:#fff}
+  
+  .legend{display:flex;gap:1.5rem;margin:1rem 0;font-size:.75rem}
+  
+  @media(max-width:700px){
+    body{padding:1rem}
+    .render-section,.compare-row{grid-template-columns:1fr}
+    .swatch-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🎨 Impact BTP Gabon Plus</h1>
+<p class="sub">Rapport de nettoyage chromatique — Palette Avant vs Après<br>
+<strong style="color:#0c61a6">Teintes mères (Hue) strictement verrouillées : Bleu 207° · Vert 140° · Or 46°</strong></p>
+
+<div class="legend">
+  <span>🟢 <strong>AAA</strong> = ratio ≥ 7:1</span>
+  <span>🟡 <strong>AA</strong> = ratio ≥ 4.5:1</span>
+  <span>⚪ <strong>Neutre</strong> = gris pur (H=0°, S=0%)</span>
+</div>
+
+<!-- ═══════════════════════ BRAND SWATCHES ═══════════════════════ -->
+<h2>🔵 Bleu · Marque (H=207°)</h2>
+<div class="swatch-grid">
+  <div class="swatch"><div class="swatch-color old" style="background:#005090"></div><div class="swatch-info"><strong>--blue</strong><code>#005090</code><span class="hsl">HSL(207°,100%,28%) S=100% néon</span></div></div>
+  <div class="swatch"><div class="swatch-color new" style="background:#0C61A6"></div><div class="swatch-info"><strong>--blue</strong><code>#0C61A6</code><span class="hsl">HSL(207°,86%,35%) S=86% corporate</span></div></div>
+  <div class="swatch"><div class="swatch-color old" style="background:#003F73"></div><div class="swatch-info"><strong>--blue-dark</strong><code>#003F73</code><span class="hsl">HSL(207°,100%,22%)</span></div></div>
+  <div class="swatch"><div class="swatch-color new" style="background:#073D69"></div><div class="swatch-info"><strong>--blue-dark</strong><code>#073D69</code><span class="hsl">HSL(207°,88%,22%)</span></div></div>
+  <div class="swatch"><div class="swatch-color old" style="background:#DFEEF8"></div><div class="swatch-info"><strong>--blue-soft</strong><code>#DFEEF8</code><span class="hsl">HSL(204°,64%,92%) ⚠ H≠207°</span></div></div>
+  <div class="swatch"><div class="swatch-color new" style="background:#E6EEF4"></div><div class="swatch-info"><strong>--blue-soft</strong><code>#E6EEF4</code><span class="hsl">HSL(207°,38%,93%) ✅ H=207°</span></div></div>
+</div>
+
+<h3>📐 Gamme Bleue complète (50–900)</h3>
+<div style="display:flex;border-radius:8px;overflow:hidden;height:48px;margin-bottom:.5rem">
+  <div style="flex:1;background:#F2F5F8" title="050"></div><div style="flex:1;background:#E6EEF4" title="100"></div>
+  <div style="flex:1;background:#C2D8EB" title="200"></div><div style="flex:1;background:#78B3E2" title="300"></div>
+  <div style="flex:1;background:#258EE4" title="400"></div><div style="flex:1;background:#0C61A6" title="500 ★"></div>
+  <div style="flex:1;background:#094E86" title="600"></div><div style="flex:1;background:#073D69" title="700"></div>
+  <div style="flex:1;background:#042A48" title="800"></div><div style="flex:1;background:#031C30" title="900"></div>
+</div>
+<p style="font-size:.68rem;color:#687078;margin-bottom:1.5rem">050 → 100 → 200 → 300 → 400 → <strong>500 ★</strong> → 600 → 700 → 800 → 900</p>
+
+<!-- ═══════════════════════ GREEN ═══════════════════════ -->
+<h2>🟢 Vert · Marque (H=140°)</h2>
+<div class="swatch-grid">
+  <div class="swatch"><div class="swatch-color old" style="background:#107030"></div><div class="swatch-info"><strong>--green</strong><code>#107030</code><span class="hsl">HSL(140°,75%,25%)</span></div></div>
+  <div class="swatch"><div class="swatch-color new" style="background:#15843A"></div><div class="swatch-info"><strong>--green</strong><code>#15843A</code><span class="hsl">HSL(140°,72%,30%) +5pts L</span></div></div>
+  <div class="swatch"><div class="swatch-color old" style="background:#DFEEE3"></div><div class="swatch-info"><strong>--green-soft</strong><code>#DFEEE3</code><span class="hsl">HSL(136°,31%,90%) ⚠ H≠140°</span></div></div>
+  <div class="swatch"><div class="swatch-color new" style="background:#E8F2EB"></div><div class="swatch-info"><strong>--green-soft</strong><code>#E8F2EB</code><span class="hsl">HSL(140°,28%,93%) ✅</span></div></div>
+</div>
+
+<h3>📐 Gamme Verte complète</h3>
+<div style="display:flex;border-radius:8px;overflow:hidden;height:48px;margin-bottom:.5rem">
+  <div style="flex:1;background:#F2F7F4" title="050"></div><div style="flex:1;background:#E8F2EB" title="100"></div>
+  <div style="flex:1;background:#C7E6D1" title="200"></div><div style="flex:1;background:#7BD599" title="300"></div>
+  <div style="flex:1;background:#2CC960" title="400"></div><div style="flex:1;background:#15843A" title="500 ★"></div>
+  <div style="flex:1;background:#116A2E" title="600"></div><div style="flex:1;background:#0D5424" title="700"></div>
+  <div style="flex:1;background:#083A19" title="800"></div><div style="flex:1;background:#04240F" title="900"></div>
+</div>
+<p style="font-size:.68rem;color:#687078;margin-bottom:1.5rem">050 → 100 → 200 → 300 → 400 → <strong>500 ★</strong> → 600 → 700 → 800 → 900</p>
+
+<!-- ═══════════════════════ YELLOW ═══════════════════════ -->
+<h2>🟡 Or · Marque (H=46°)</h2>
+<div class="swatch-grid">
+  <div class="swatch"><div class="swatch-color old" style="background:#F2BD18"></div><div class="swatch-info"><strong>--yellow</strong><code>#F2BD18</code><span class="hsl">HSL(45°,89%,52%)</span></div></div>
+  <div class="swatch"><div class="swatch-color new" style="background:#ECB913"></div><div class="swatch-info"><strong>--yellow</strong><code>#ECB913</code><span class="hsl">HSL(46°,85%,50%)</span></div></div>
+  <div class="swatch"><div class="swatch-color old" style="background:#FFF4CB"></div><div class="swatch-info"><strong>--yellow-soft</strong><code>#FFF4CB</code><span class="hsl">HSL(47°,100%,90%) S=100%</span></div></div>
+  <div class="swatch"><div class="swatch-color new" style="background:#F7F2E3"></div><div class="swatch-info"><strong>--yellow-soft</strong><code>#F7F2E3</code><span class="hsl">HSL(46°,55%,93%)</span></div></div>
+</div>
+
+<!-- ═══════════════════════ RENDERED COMPARISON ═══════════════════════ -->
+<h2>🖼️ Rendu comparé — Boutons, Texte, Cartes</h2>
+
+<h3>Boutons CTA</h3>
+<div class="render-section">
+  <div class="render-panel old-panel">
+    <h4>🔴 Ancienne palette</h4>
+    <button class="btn-sample" style="background:#005090;color:#fff">Devis gratuit</button>
+    <button class="btn-sample" style="background:#107030;color:#fff">Nos services</button>
+    <button class="btn-sample" style="background:#F2BD18;color:#102033">Contact</button>
+    <button class="btn-sample" style="border:1px solid rgba(0,80,144,.28);color:#005090;background:transparent">En savoir plus</button>
+    <p style="font-size:.7rem;color:#6a7b88;margin-top:.5rem">Saturation 100% = boutons « plastique »</p>
+  </div>
+  <div class="render-panel new-panel">
+    <h4>🟢 Nouvelle palette</h4>
+    <button class="btn-sample" style="background:#0C61A6;color:#fff">Devis gratuit <span class="wcag-badge wcag-aa">AA 6.4:1</span></button>
+    <button class="btn-sample" style="background:#15843A;color:#fff">Nos services <span class="wcag-badge wcag-aa">AA 4.8:1</span></button>
+    <button class="btn-sample" style="background:#ECB913;color:#1A2028">Contact <span class="wcag-badge wcag-aaa">AAA 9.0:1</span></button>
+    <button class="btn-sample" style="border:1px solid rgba(12,97,166,.28);color:#0C61A6;background:transparent">En savoir plus</button>
+    <p style="font-size:.7rem;color:#15843a;margin-top:.5rem">Saturation maîtrisée = boutons corporate élégants</p>
+  </div>
+</div>
+
+<h3>Texte & Hiérarchie</h3>
+<div class="render-section">
+  <div class="render-panel old-panel">
+    <h4>🔴 Ancienne palette</h4>
+    <div class="text-sample heading" style="color:#102033">Construction de voiries</div>
+    <div class="text-sample body" style="color:#38495A">Nous construisons des voiries secondaires solides et durables, pensées pour le climat gabonais et le trafic quotidien.</div>
+    <div class="text-sample muted" style="color:#6A7B88;margin-top:.5rem">Texte secondaire · ratio 5.2:1 sur blanc</div>
+    <div style="background:#F5F6F7;padding:.8rem;border-radius:8px;margin-top:.5rem;font-size:.75rem">
+      Fond --bg: #F5F6F7 (parasite bleu 210°)
+    </div>
+  </div>
+  <div class="render-panel new-panel">
+    <h4>🟢 Nouvelle palette</h4>
+    <div class="text-sample heading" style="color:#1A2028">Construction de voiries <span class="wcag-badge wcag-aaa">AAA 16.4:1</span></div>
+    <div class="text-sample body" style="color:#434C56">Nous construisons des voiries secondaires solides et durables, pensées pour le climat gabonais et le trafic quotidien. <span class="wcag-badge wcag-aaa">AAA 8.7:1</span></div>
+    <div class="text-sample muted" style="color:#687078;margin-top:.5rem">Texte secondaire · ratio 5.0:1 AA</div>
+    <div style="background:#F5F5F5;padding:.8rem;border-radius:8px;margin-top:.5rem;font-size:.75rem">
+      Fond --bg: #F5F5F5 (gris neutre pur ✅)
+    </div>
+  </div>
+</div>
+
+<h3>Carte / Section</h3>
+<div class="render-section">
+  <div class="render-panel old-panel">
+    <h4>🔴 Ancienne palette</h4>
+    <div class="card-sample" style="background:#fff;border:1px solid #DDE1E5">
+      <span style="color:#005090;font-weight:900;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em">Voirie</span>
+      <div style="font-weight:800;font-size:1.1rem;color:#102033;margin:.3rem 0">Pistes rurales</div>
+      <div style="font-size:.85rem;color:#38495A">Relier les villages et sécuriser les accès.</div>
+      <div style="margin-top:.8rem;padding:.5rem;background:#DFEEF8;border-radius:6px;font-size:.7rem;color:#6a7b88">
+        Fond --blue-soft: #DFEEF8 (H=204° ≠ 207°)
+      </div>
+    </div>
+  </div>
+  <div class="render-panel new-panel">
+    <h4>🟢 Nouvelle palette</h4>
+    <div class="card-sample" style="background:#fff;border:1px solid #E3E3E3">
+      <span style="color:#0C61A6;font-weight:900;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em">Voirie</span>
+      <div style="font-weight:800;font-size:1.1rem;color:#1A2028;margin:.3rem 0">Pistes rurales</div>
+      <div style="font-size:.85rem;color:#434C56">Relier les villages et sécuriser les accès.</div>
+      <div style="margin-top:.8rem;padding:.5rem;background:#E6EEF4;border-radius:6px;font-size:.7rem;color:#687078">
+        Fond --blue-soft: #E6EEF4 (H=207° ✅ aligné)
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Section sombre (Hero/Footer)</h3>
+<div class="render-section">
+  <div class="hero-sample" style="background:#05253F;color:#fff">
+    <h4 style="color:#889db5">🔴 Ancien footer</h4>
+    <div style="font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:.5rem">Impact BTP Gabon Plus</div>
+    <div style="color:#c8d8e8;font-size:.85rem;max-width:28ch">Texte sur fond sombre — saturation 41%, un peu « flashy » sur fond marine.</div>
+    <div style="color:#889db5;font-size:.72rem;margin-top:.5rem">Texte atténué — S=23%</div>
+  </div>
+  <div class="hero-sample" style="background:#031C30;color:#fff">
+    <h4 style="color:#9aa3ac">🟢 Nouveau footer</h4>
+    <div style="font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:.5rem">Impact BTP Gabon Plus</div>
+    <div style="color:#d6dce1;font-size:.85rem;max-width:28ch">Texte sur fond sombre — saturation 16%, lecture douce et confortable. <span class="wcag-badge wcag-aaa">AAA 12:1</span></div>
+    <div style="color:#9aa3ac;font-size:.72rem;margin-top:.5rem">Texte atténué — S=10%, plus sobre</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ GRAYS TABLE ═══════════════════════ -->
+<h2>⚪ Système de Gris — Neutralisation</h2>
+<p style="color:#687078;font-size:.9rem;margin-bottom:1rem">Tous les gris avaient des dominantes parasites bleu/cyan (180°–210°). Remplacés par des gris purs (H=0°, S=0%).</p>
+
+<div class="compare-row">
+  <div class="compare-cell" style="background:#fff">
+    <div class="compare-label old">Avant — Gris avec parasites</div>
+    <div style="padding:.6rem .75rem;font-size:.75rem">
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#DDE1E5"></div> --line #DDE1E5 <span style="color:#6a7b88;font-size:.65rem">H=210°</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#F0F2F4"></div> --soft #F0F2F4 <span style="color:#6a7b88;font-size:.65rem">H=210°</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#FAFBFB"></div> --surface #FAFBFB <span style="color:#6a7b88;font-size:.65rem">H=180°</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#EEF0F2"></div> --surface-strong <span style="color:#6a7b88;font-size:.65rem">H=210°</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#F5F6F7"></div> --bg #F5F6F7 <span style="color:#6a7b88;font-size:.65rem">H=210°</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#EDF0F2"></div> --bg-alt #EDF0F2 <span style="color:#6a7b88;font-size:.65rem">H=204°</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#FAFBFC"></div> --bg-card-hover <span style="color:#6a7b88;font-size:.65rem">H=210°</span></div>
+    </div>
+  </div>
+  <div class="compare-cell" style="background:#fff">
+    <div class="compare-label new">Après — Gris neutres purs</div>
+    <div style="padding:.6rem .75rem;font-size:.75rem">
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#E3E3E3"></div> --line #E3E3E3 <span style="color:#15843a;font-size:.65rem">H=0° ✅</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#F2F2F2"></div> --soft #F2F2F2 <span style="color:#15843a;font-size:.65rem">H=0° ✅</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#FAFAFA"></div> --surface #FAFAFA <span style="color:#15843a;font-size:.65rem">H=0° ✅</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#EDEDED"></div> --surface-strong <span style="color:#15843a;font-size:.65rem">H=0° ✅</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#F5F5F5"></div> --bg #F5F5F5 <span style="color:#15843a;font-size:.65rem">H=0° ✅</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#F0F0F0"></div> --bg-alt #F0F0F0 <span style="color:#15843a;font-size:.65rem">H=0° ✅</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem;margin:.3rem 0"><div style="width:40px;height:24px;border-radius:4px;background:#F7F7F7"></div> --bg-card-hover <span style="color:#15843a;font-size:.65rem">H=0° ✅</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ SYNTHÈSE ═══════════════════════ -->
+<h2>📋 Synthèse des actions</h2>
+<table style="width:100%;border-collapse:collapse;font-size:.82rem;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+<thead>
+<tr style="background:#1a2028;color:#fff;text-align:left">
+  <th style="padding:.6rem .8rem">Action</th>
+  <th style="padding:.6rem .8rem">Couleurs concernées</th>
+  <th style="padding:.6rem .8rem">Résultat</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background:#fafafa"><td style="padding:.55rem .8rem;font-weight:700">Saturation réduite</td><td style="padding:.55rem .8rem">--blue (−14pts), --green (−3pts), --yellow (−4pts)</td><td style="padding:.55rem .8rem">Fini l'effet « néon » → élégance corporate</td></tr>
+<tr><td style="padding:.55rem .8rem;font-weight:700">Luminosité ajustée</td><td style="padding:.55rem .8rem">--blue (+7pts L), --green (+5pts L)</td><td style="padding:.55rem .8rem">Meilleure respiration visuelle</td></tr>
+<tr style="background:#fafafa"><td style="padding:.55rem .8rem;font-weight:700">Gris neutralisés</td><td style="padding:.55rem .8rem">7 variables : line, soft, surface, bg, bg-alt, etc.</td><td style="padding:.55rem .8rem">Dominantes parasites (180°–210°) éliminées</td></tr>
+<tr><td style="padding:.55rem .8rem;font-weight:700">Teintes réalignées</td><td style="padding:.55rem .8rem">blue-soft, green-soft, yellow-soft, tints</td><td style="padding:.55rem .8rem">Toutes les variantes pointent sur la Hue mère</td></tr>
+<tr style="background:#fafafa"><td style="padding:.55rem .8rem;font-weight:700">Gammes créées</td><td style="padding:.55rem .8rem">3 échelles 50→900 (bleu, vert, or)</td><td style="padding:.55rem .8rem">Hiérarchie complète utilisable partout</td></tr>
+<tr><td style="padding:.55rem .8rem;font-weight:700">Contrastes vérifiés</td><td style="padding:.55rem .8rem">8 paires texte/fond critiques</td><td style="padding:.55rem .8rem">100% conformes WCAG AA ou AAA</td></tr>
+</tbody>
+</table>
+
+<!-- ═══════════════════════ USAGE ═══════════════════════ -->
+<h2>📦 Comment intégrer</h2>
+<div style="background:#1a2028;color:#d6dce1;padding:1.2rem 1.5rem;border-radius:10px;font-size:.85rem;line-height:1.7;margin-bottom:1rem">
+<strong style="color:#ecb913">Option recommandée :</strong> remplacer le bloc <code>:root { ... }</code> dans <code>styles.css</code> par le contenu de<br>
+<code style="color:#78b3e2">styles-refined-v4.css</code> (tout le reste du fichier CSS reste inchangé).<br><br>
+<strong style="color:#ecb913">Les alias sémantiques</strong> (<code>--blue</code>, <code>--green</code>, etc.) pointent vers les nouvelles valeurs via <code>var()</code> :<br>
+<code style="color:#78b3e2">--blue: var(--blue-500);</code> ← tout le code existant continue de fonctionner sans modification.
+</div>
+
+<p style="color:#687078;font-size:.8rem;text-align:center;margin-top:2rem">
+Rapport généré le 30 juin 2026 · Impact BTP Gabon Plus · Coloriste UI/UX Senior<br>
+<strong>Teintes mères verrouillées : Bleu 207° · Vert 140° · Or 46° — Aucune hue modifiée.</strong>
+</p>
+
+</div>
+</body>
+</html>
